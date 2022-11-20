@@ -43,6 +43,11 @@ mcnemar.test (Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ra
 barplot(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`),
         beside = T, col=c(2,4), ylim = c(0,6))
 
+grid(nx = NA, ny = NULL, lwd = 1, lty = 1, col = ("gray"))
+
+barplot(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`),
+        beside = T, col=c(2,4), ylim = c(0,6), add = T)
+
 legend(x = "topright",                            
        legend = rownames(table(Vacas$`Problemas pre-ración...11`, 
                                Vacas$`Problemas durante la ración`)),       
@@ -56,5 +61,14 @@ table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`)
 epi.2by2(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`), 
          "cohort.count")
 
-prop.test(x= 67, n=13, conf.level=0.95)$conf.int
-prop.test(x= 114, n=13, conf.level=0.95)$conf.int
+8/12*100 #Incidencia acumulada preración
+3/12*10 #Incidencia acumulada ración
+
+12*60
+8/720*100 # DI pre-ración
+3/720*100 # DI después de la ración
+
+
+
+prop.test(x= 3, n=12, conf.level=0.95)$conf.int
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
