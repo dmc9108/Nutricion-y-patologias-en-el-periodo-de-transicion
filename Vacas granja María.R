@@ -10,10 +10,7 @@ names(Vacas)
 
 # Intalación de paquetes y liberías
 
-install.packages("carData")
 library(car)
-
-install.packages("epiR")
 library(epiR)
 
 # Problemas pre-ración y durante la ración
@@ -62,13 +59,69 @@ epi.2by2(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la r
          "cohort.count")
 
 8/12*100 #Incidencia acumulada preración
-3/12*10 #Incidencia acumulada ración
+3/12*100 #Incidencia acumulada ración
 
 12*60
-8/720*100 # DI pre-ración
-3/720*100 # DI después de la ración
+8/720 # DI pre-ración
+3/720 # DI después de la ración
 
-
-
+prop.test(x= 8, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
 prop.test(x= 3, n=12, conf.level=0.95)$conf.int
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+# Mastitis
+
+Vacas$`Mastitis pre-ración` <- as.factor(Vacas$`Mastitis pre-ración`)
+Vacas$`Mastitis durante la ración`<- as.factor(Vacas$`Mastitis durante la ración`)
+
+Vacas$`Mastitis pre-ración`<- factor(Vacas$`Mastitis pre-ración`,
+                                           levels = levels(Vacas$`Mastitis pre-ración`),
+                                           labels = c("Positivo antes", "Negativo antes"),
+                                           ordered = F)
+
+str(Vacas$`Mastitis pre-ración`)
+
+
+Vacas$`Mastitis durante la ración`<- factor(Vacas$`Mastitis durante la ración`,
+                                             levels = levels(Vacas$`Mastitis durante la ración`),
+                                             labels = c("Positivo después", "Negativo después"),
+                                             ordered = F)
+
+str(Vacas$`Mastitis durante la ración`)
+
+
+mcnemar.test (Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`
+              , correct = TRUE)
+
+barplot(table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`),
+        beside = T, col=c(2,4), ylim = c(0,10))
+
+grid(nx = NA, ny = NULL, lwd = 1, lty = 1, col = ("gray"))
+
+barplot(table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`),
+        beside = T, col=c(2,4), ylim = c(0,10), add = T)
+
+legend(x = "topright",                            
+       legend = rownames(table(Vacas$`Mastitis pre-ración`, 
+                               Vacas$`Mastitis durante la ración`)),       
+       col=c(2,4),          
+       pch = 15,
+       inset = c(-0.01, -0.2),
+       xpd = TRUE, bty = "n")
+
+table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`)
+
+epi.2by2(table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`), 
+         "cohort.count")
+
+4/12*100 #Incidencia acumulada preración
+1/12*100 #Incidencia acumulada ración
+
+prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+12*60
+4/720*100 # DI pre-ración
+1/720*100 # DI después de la ración
+
+prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
