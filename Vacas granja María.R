@@ -12,6 +12,8 @@ names(Vacas)
 
 library(car)
 library(epiR)
+library(plotrix)
+
 
 # Problemas pre-ración y durante la ración
 
@@ -62,11 +64,82 @@ epi.2by2(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la r
 3/12*100 #Incidencia acumulada ración
 
 12*60
-8/720 # DI pre-ración
-3/720 # DI después de la ración
+8/720*100 # DI pre-ración
+3/720*100 # DI después de la ración
 
 prop.test(x= 8, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
 prop.test(x= 3, n=12, conf.level=0.95)$conf.int
+
+
+
+Vacas$`Problemas pre y durante la ración` <- as.factor(Vacas$`Problemas pre y durante la ración`)
+
+Vacas$`Problemas durante la ración`<- factor(Vacas$`Problemas pre y durante la ración`,
+                                             levels = levels(Vacas$`Problemas pre y durante la ración`),
+                                             labels = c("Positivo después", "Negativo después"),
+                                             ordered = F)
+
+
+pie3D(table(Vacas$`Problemas pre y durante la ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Problemas pre y durante la ración`)/
+                       sum(table(Vacas$`Problemas pre y durante la ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
+
+# Retención de placenta
+0/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+1/12*100
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+1/720*100
+
+Vacas$`Problemas pre y durante la ración` <- as.factor(Vacas$`Problemas pre y durante la ración`)
+
+Vacas$`Problemas durante la ración`<- factor(Vacas$`Problemas pre y durante la ración`,
+                                             levels = levels(Vacas$`Problemas pre y durante la ración`),
+                                             labels = c("Positivo después", "Negativo después"),
+                                             ordered = F)
+
+
+pie3D(table(Vacas$`Problemas pre y durante la ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Problemas pre y durante la ración`)/
+                             sum(table(Vacas$`Problemas pre y durante la ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
+
+# Indigestión
+0/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+1/12*100
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+1/720*100
+
+# Flujos anormales
+0/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+2/12*100
+prop.test(x= 2, n=12, conf.level=0.95)$conf.int
+
+2/720*100
 
 # Mastitis
 
@@ -125,3 +198,6 @@ prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
 prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+
+
