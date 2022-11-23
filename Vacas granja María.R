@@ -2,7 +2,7 @@
 
 library(readxl)
 Vacas <- read_excel("~/MEGA/Israel Almanza. Nutrición y patologías período de transición/Vacas.xlsx", 
-                    range = "A1:AD13")
+                    range = "A1:AE13")
 View(Vacas)
 
 str(Vacas)
@@ -102,17 +102,9 @@ prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
 1/720*100
 
-Vacas$`Problemas pre y durante la ración` <- as.factor(Vacas$`Problemas pre y durante la ración`)
-
-Vacas$`Problemas durante la ración`<- factor(Vacas$`Problemas pre y durante la ración`,
-                                             levels = levels(Vacas$`Problemas pre y durante la ración`),
-                                             labels = c("Positivo después", "Negativo después"),
-                                             ordered = F)
-
-
-pie3D(table(Vacas$`Problemas pre y durante la ración`), col = c(2,4),
-      labels = paste(round(table(Vacas$`Problemas pre y durante la ración`)/
-                             sum(table(Vacas$`Problemas pre y durante la ración`)),2)*100, "%"), 
+pie3D(table(Vacas$`Retención placentaria durante la ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Retención placentaria durante la ración`)/
+                             sum(table(Vacas$`Retención placentaria durante la ración`)),2)*100, "%"), 
       labelcex = 1, explode = 0)
 
 legend(x = "topright",                            
@@ -132,6 +124,18 @@ prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
 1/720*100
 
+pie3D(table(Vacas$`Indigestión pre-ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Indigestión pre-ración`)/
+                             sum(table(Vacas$`Indigestión pre-ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
 # Flujos anormales
 0/12*100
 prop.test(x= 0, n=12, conf.level=0.95)$conf.int
@@ -140,6 +144,62 @@ prop.test(x= 0, n=12, conf.level=0.95)$conf.int
 prop.test(x= 2, n=12, conf.level=0.95)$conf.int
 
 2/720*100
+
+pie3D(table(Vacas$`Flujos anormales ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Flujos anormales ración`)/
+                             sum(table(Vacas$`Flujos anormales ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
+# Metritis
+
+0/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+2/12*100
+prop.test(x= 2, n=12, conf.level=0.95)$conf.int
+
+2/720*100
+
+pie3D(table(Vacas$`Metritis ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Metritis ración`)/
+                             sum(table(Vacas$`Metritis ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
+# Acidez ruminal
+0/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+
+1/12*100
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+1/720*100
+
+pie3D(table(Vacas$`Acidez ruminal pre-ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Acidez ruminal pre-ración`)/
+                             sum(table(Vacas$`Acidez ruminal pre-ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
+
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
+
 
 # Mastitis
 
@@ -200,4 +260,14 @@ prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
 
+pie3D(table(Vacas$), col = c(2,4),
+      labels = paste(round(table(Vacas$`Acidez ruminal pre-ración`)/
+                             sum(table(Vacas$`Acidez ruminal pre-ración`)),2)*100, "%"), 
+      labelcex = 1, explode = 0)
 
+legend(x = "topright",                            
+       legend = c("Positivo", "Negativo"),       
+       col = c(2,4),          
+       pch = 15,
+       inset = c(-0.1, -0.05),
+       xpd = TRUE, bty = "n")
