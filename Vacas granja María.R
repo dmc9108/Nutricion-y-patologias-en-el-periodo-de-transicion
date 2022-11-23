@@ -8,7 +8,7 @@ View(Vacas)
 str(Vacas)
 names(Vacas)
 
-# Intalación de paquetes y liberías
+# Intalación de liberías
 
 library(car)
 library(epiR)
@@ -37,10 +37,10 @@ str(Vacas$`Problemas durante la ración`)
 
 
 mcnemar.test (Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`
-              , correct = TRUE)
+              , correct = TRUE) # Test de McNemar
 
 barplot(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`),
-        beside = T, col=c(2,4), ylim = c(0,6))
+        beside = T, col=c(2,4), ylim = c(0,6)) #Gráfico de barras agrupadas
 
 grid(nx = NA, ny = NULL, lwd = 1, lty = 1, col = ("gray"))
 
@@ -55,21 +55,23 @@ legend(x = "topright",
        inset = c(-0.01, -0.2),
        xpd = TRUE, bty = "n")
 
-table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`)
+prop.table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`)
 
 epi.2by2(table(Vacas$`Problemas pre-ración...11`, Vacas$`Problemas durante la ración`), 
          "cohort.count")
 
-8/12*100 #Incidencia acumulada preración
-3/12*100 #Incidencia acumulada ración
-
-12*60
-8/720*100 # DI pre-ración
-3/720*100 # DI después de la ración
-
+round(table(Vacas$`Problemas pre-ración...11`)/
+        sum(table(Vacas$`Problemas pre-ración...11`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 8, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
-prop.test(x= 3, n=12, conf.level=0.95)$conf.int
 
+round(table(Vacas$`Problemas durante la ración`)/
+        sum(table(Vacas$`Problemas pre-ración...11`)),2)*100 #Incidencia acumulada ración
+prop.test(x= 3, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
+
+
+(8/(12*1))*10 # TI pre-ración
+(3/(12*1))*10 # TI después de la ración
+(11/((12*1)*2))*10 #DI Total
 
 
 Vacas$`Problemas pre y durante la ración` <- as.factor(Vacas$`Problemas pre y durante la ración`)
@@ -78,7 +80,6 @@ Vacas$`Problemas durante la ración`<- factor(Vacas$`Problemas pre y durante la 
                                              levels = levels(Vacas$`Problemas pre y durante la ración`),
                                              labels = c("Positivo después", "Negativo después"),
                                              ordered = F)
-
 
 pie3D(table(Vacas$`Problemas pre y durante la ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Problemas pre y durante la ración`)/
@@ -94,13 +95,14 @@ legend(x = "topright",
 
 
 # Retención de placenta
-0/12*100
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
 
-1/12*100
+prop.test(x= 0, n=12, conf.level=0.95)$conf.int
+round(table(Vacas$`Retención placentaria durante la ración`)/
+        sum(table(Vacas$`Retención placentaria durante la ración`)),2)*100 #Incidencia acumulada ración
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
-1/720*100
+(1/(12*1))*10 # DI después de la ración
+(1/((12*1)*2))*10 #DI Total
 
 pie3D(table(Vacas$`Retención placentaria durante la ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Retención placentaria durante la ración`)/
@@ -116,13 +118,13 @@ legend(x = "topright",
 
 
 # Indigestión
-0/12*100
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
 
-1/12*100
-prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+round(table(Vacas$`Indigestión pre-ración`)/
+        sum(table(Vacas$`Indigestión pre-ración`)),2)*100 #Incidencia acumulada preración
+prop.test(x= 8, n=12, conf.level=0.95)$conf.int
 
-1/720*100
+(1/(12*1))*10 # DI pre-ración
+(1/((12*1)*2))*10 #DI Total
 
 pie3D(table(Vacas$`Indigestión pre-ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Indigestión pre-ración`)/
@@ -137,13 +139,13 @@ legend(x = "topright",
        xpd = TRUE, bty = "n")
 
 # Flujos anormales
-0/12*100
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
 
-2/12*100
+round(table(Vacas$`Flujos anormales ración`)/
+        sum(table(Vacas$`Flujos anormales ración`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 2, n=12, conf.level=0.95)$conf.int
 
-2/720*100
+(2/(12*1))*10 # DI ración
+(2/((12*1)*2))*10 #DI Total
 
 pie3D(table(Vacas$`Flujos anormales ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Flujos anormales ración`)/
@@ -159,13 +161,12 @@ legend(x = "topright",
 
 # Metritis
 
-0/12*100
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
-
-2/12*100
+round(table(Vacas$`Metritis ración`)/
+        sum(table(Vacas$`Metritis ración`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 2, n=12, conf.level=0.95)$conf.int
 
-2/720*100
+(2/(12*1))*10 # DI ración
+(2/((12*1)*2))*10 #DI Total
 
 pie3D(table(Vacas$`Metritis ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Metritis ración`)/
@@ -180,13 +181,13 @@ legend(x = "topright",
        xpd = TRUE, bty = "n")
 
 # Acidez ruminal
-0/12*100
-prop.test(x= 0, n=12, conf.level=0.95)$conf.int
 
-1/12*100
+round(table(Vacas$`Acidez ruminal pre-ración`)/
+        sum(table(Vacas$`Acidez ruminal pre-ración`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
-1/720*100
+(1/(12*1))*10 # DI ración
+(1/((12*1)*2))*10 #DI Total
 
 pie3D(table(Vacas$`Acidez ruminal pre-ración`), col = c(2,4),
       labels = paste(round(table(Vacas$`Acidez ruminal pre-ración`)/
@@ -246,23 +247,21 @@ table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`)
 epi.2by2(table(Vacas$`Mastitis pre-ración`, Vacas$`Mastitis durante la ración`), 
          "cohort.count")
 
-4/12*100 #Incidencia acumulada preración
-1/12*100 #Incidencia acumulada ración
+round(table(Vacas$`Mastitis pre-ración`)/
+        sum(table(Vacas$`Mastitis pre-ración`)),2)*100 #Incidencia acumulada preración
+prop.test(x= 4, n=12, conf.level=0.95)$conf.int
 
-prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
+round(table(Vacas$`Mastitis durante la ración`)/
+        sum(table(Vacas$`Mastitis durante la ración`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
-12*60
-4/720*100 # DI pre-ración
-1/720*100 # DI después de la ración
+(4/(12*1))*10 # TI pre-ración
+(1/(12*1))*10 # TI ración
+(4/((12*1)*2))*10 #TI Total
 
-prop.test(x= 4, n=12, conf.level=0.95)$conf.int #Tamaño del efecto con IC al 95%
-prop.test(x= 1, n=12, conf.level=0.95)$conf.int
-
-
-pie3D(table(Vacas$), col = c(2,4),
-      labels = paste(round(table(Vacas$`Acidez ruminal pre-ración`)/
-                             sum(table(Vacas$`Acidez ruminal pre-ración`)),2)*100, "%"), 
+pie3D(table(Vacas$`Mastitis pre y durante la ración`), col = c(2,4),
+      labels = paste(round(table(Vacas$`Mastitis pre y durante la ración`)/
+                             sum(table(Vacas$`Mastitis pre y durante la ración`)),2)*100, "%"), 
       labelcex = 1, explode = 0)
 
 legend(x = "topright",                            
@@ -271,3 +270,5 @@ legend(x = "topright",
        pch = 15,
        inset = c(-0.1, -0.05),
        xpd = TRUE, bty = "n")
+
+ultimo
