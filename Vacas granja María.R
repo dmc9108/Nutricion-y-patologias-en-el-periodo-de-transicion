@@ -2,11 +2,12 @@
 
 library(readxl)
 Vacas <- read_excel("~/MEGA/Israel Almanza. Nutrición y patologías período de transición/Vacas.xlsx", 
-                    range = "A1:AE13")
+                    range = "A1:AF13")
 View(Vacas)
 
 str(Vacas)
 names(Vacas)
+rm(Vacas)
 
 # Intalación de liberías
 
@@ -271,4 +272,56 @@ legend(x = "topright",
        inset = c(-0.1, -0.05),
        xpd = TRUE, bty = "n")
 
-ultimo
+# Patologías en relación a la raza
+
+Vacas$Raza...3 <- as.factor(Vacas$Raza...3)
+Vacas$`Problemas pre y durante la ración`<- as.factor(Vacas$`Problemas pre y durante la ración`)
+
+Vacas$Raza...3 <- factor(Vacas$Raza...3,levels = levels(Vacas$Raza...3),
+                         labels = c("Holstein", "Jersey", "Holstein x Montbeliarde",
+                                    "Jersey x Holstein", "Parda x Holstein"), ordered = F)
+
+str(Vacas$Raza...3)
+table(Vacas$Raza...3)
+
+Vacas$`Problemas pre y durante la ración`<- factor(Vacas$`Problemas pre y durante la ración`,
+                                                   levels = levels(Vacas$`Problemas pre y durante la ración`),
+                                                   labels = c("Positivo", "Negativo"),
+                                                   ordered = F)
+
+str(Vacas$`Problemas pre y durante la ración`)
+
+
+
+chisq.test (Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)
+
+barplot(table(Vacas$`Problemas pre y durante la ración`, Vacas$Raza...3),
+        beside = T, col=c(2,4))
+
+grid(nx = NA, ny = NULL, lwd = 1, lty = 1, col = ("gray"))
+
+barplot(table(Vacas$`Problemas pre y durante la ración`, Vacas$Raza...3),
+        beside = T, col=c(2,4), add = T,)
+
+help(barplot)
+
+legend(x = "topright",                            
+       legend = rownames(table(Vacas$`Problemas pre y durante la ración`)),       
+       col=c(2,4),          
+       pch = 15,
+       inset = c(-0.01, -0.2),
+       xpd = TRUE, bty = "n")
+
+table(Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)
+
+round(table(Vacas$`Mastitis pre-ración`)/
+        sum(table(Vacas$`Mastitis pre-ración`)),2)*100 #Incidencia acumulada preración
+prop.test(x= 4, n=12, conf.level=0.95)$conf.int
+
+round(table(Vacas$`Mastitis durante la ración`)/
+        sum(table(Vacas$`Mastitis durante la ración`)),2)*100 #Incidencia acumulada preración
+prop.test(x= 1, n=12, conf.level=0.95)$conf.int
+
+(4/(12*1))*10 # TI pre-ración
+(1/(12*1))*10 # TI ración
+(4/((12*1)*2))*10 #TI Total
