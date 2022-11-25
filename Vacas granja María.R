@@ -296,14 +296,16 @@ str(Vacas$`Problemas pre y durante la ración`)
 chisq.test (Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)
 
 barplot(table(Vacas$`Problemas pre y durante la ración`, Vacas$Raza...3),
-        beside = T, col=c(2,4))
+        beside = F, col=c(2,4), las=1, cex.names = 0.6 , 
+        names.arg = c("Holstein", "Jersey", "Holstein-Montbeliarde",
+                                                     "Jersey-Holstein", "Parda-Holstein"))
 
 grid(nx = NA, ny = NULL, lwd = 1, lty = 1, col = ("gray"))
 
 barplot(table(Vacas$`Problemas pre y durante la ración`, Vacas$Raza...3),
-        beside = T, col=c(2,4), add = T,)
-
-help(barplot)
+        beside = F, col=c(2,4), add = T, las=1, cex.names = 0.6 , 
+        names.arg = c("Holstein", "Jersey", "Holstein-Montbeliarde",
+                      "Jersey-Holstein", "Parda-Holstein") )
 
 legend(x = "topright",                            
        legend = rownames(table(Vacas$`Problemas pre y durante la ración`)),       
@@ -314,14 +316,18 @@ legend(x = "topright",
 
 table(Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)
 
-round(table(Vacas$`Mastitis pre-ración`)/
-        sum(table(Vacas$`Mastitis pre-ración`)),2)*100 #Incidencia acumulada preración
-prop.test(x= 4, n=12, conf.level=0.95)$conf.int
+round(table(Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)/
+        sum(table(Vacas$Raza...3, Vacas$`Problemas pre y durante la ración`)),2)*100 #Incidencia acumulada preración
+
+prop.test(x= 2, n=12, conf.level=0.95)$conf.int
 
 round(table(Vacas$`Mastitis durante la ración`)/
         sum(table(Vacas$`Mastitis durante la ración`)),2)*100 #Incidencia acumulada preración
 prop.test(x= 1, n=12, conf.level=0.95)$conf.int
 
-(4/(12*1))*10 # TI pre-ración
-(1/(12*1))*10 # TI ración
-(4/((12*1)*2))*10 #TI Total
+(3/(12*1)*2)*10 # TI Hostein
+(1/(12*1)*2)*10 # TI Jersey
+(2/((12*1)*2))*10 #TI Holstein x Montbeliarde
+(1/((12*1)*2))*10 #TI Jersey x Holstein
+(1/((12*1)*2))*10 #TI Holstein x Montbeliarde
+
